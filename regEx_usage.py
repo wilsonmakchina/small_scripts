@@ -1,6 +1,10 @@
+# substitute ',' for '/' for my file
+
 import re
-file = open('bp_go_enrichment.txt') # read file
-file2 = open('result.txt', 'w') # write file
+import sys
+file_name = sys.argv[1]
+file = open(file_name) # read file
+file2 = open(file_name + '_result.txt', 'w') # write file
 for line in file.readlines():
 	line = line.rstrip()
 	line = re.sub('/', ',', line, count=0)
