@@ -6,14 +6,12 @@ Created on Tue Jul 25 14:52:36 2017
 @author: Apple
 """
 
-import numpy as ny
+import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 
-#from sklearn.preprocessing import scale
-#from sklearn import decomposition
-#from sklearn import datasets
+
 from sklearn.decomposition import PCA
 
 #Load data set
@@ -26,10 +24,11 @@ head = list(data)[1:]
 
 data2 = data.drop(data.columns[0], axis = 1)
 data2 = pd.DataFrame.transpose(data2)
-data2 = ny.log2(data2 + 1)
+data2 = np.log2(data2 + 1)
 
 centers = [[1, 1], [-1, -1], [1, -1]]
-#iris = datasets.load_iris()
+
+# 3d pca
 pca_3 = PCA(3)
 
 plot_columns = pca_3.fit_transform(data2)
@@ -47,11 +46,7 @@ fig = plt.figure(1)
 #plt.clf()
 
 ## Set/get 3d viewing direction for Matplotlib Axes3D
-ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=20, azim=117) # azim=134, make left handside axs to right
-
-
-
-
+ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=20, azim=117) # azim: make left handside axs to right
 
 
 
@@ -68,6 +63,7 @@ ax.zaxis.pane.fill = False
 # grid
 plt.cla()
 
+# seven colors for seven types of cell
 colors = ['#DDDDDD',
           '#0044BB',
           '#CC0000',
@@ -83,13 +79,12 @@ for a in xrange(14):
     ax.scatter(X[:, 0][a], X[:, 1][a], X[:, 2][a], 
                s = 150, c = colors[a/2], label = labels[a/2])
 
+# text format
 from matplotlib import rc
-rc('font',size=10, family='Sans serif', weight = 'bold')
+rc('font', size=10, family='Sans serif', weight = 'bold')
 ax.set_xlabel("PC1 (%.0f" % (variance_ratio[0] * 100)+'%)', weight = 'bold')
 ax.set_ylabel("PC2 (%.0f" % (variance_ratio[1] * 100)+'%)', weight = 'bold')
 ax.set_zlabel("PC3 (%.0f" % (variance_ratio[2] * 100)+'%)', weight = 'bold')
-
-
 
 
 
